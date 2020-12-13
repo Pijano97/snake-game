@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Snake from "./Snake";
 import Food from "./Food";
@@ -19,16 +19,36 @@ function App() {
 		[2, 0],
 	]);
 	const [foodDots, setFoodDots] = useState(getRandomFoodDot());
-	const [direction, setDirection] = useState("RIGHT");
+	const [direction, setDirection] = useState("");
 
-	// const handleKey = (e) => {
-	// 	onkeydown(setDirection("test"));
-	// };
+	const moveSnake = () => {
+		let dots = [...snakeDots];
+		let head = dots[dots.length - 1];
 
-	// onKeyDown(setDirection("test"));
-	// console.log(snakeDots);
+		switch (direction) {
+			case "UP":
+				head = [head[0], head[1] - 2];
+				break;
+			case "DOWN":
+				head = [head[0], head[1] + 2];
+				break;
+			case "LEFT":
+				head = [head[0] - 2, head[1]];
+				break;
+			case "RIGHT":
+				head = [head[0] + 2, head[1]];
+				break;
+			default:
+				break;
+		}
+		// adding new head
+		dots.push(head);
+		// removing last dot
+		dots.shift();
+		setSnakeDots(dots);
+	};
 
-	const checkKeyPress = (e) => {
+	const keyPressHandler = (e) => {
 		switch (e.keyCode) {
 			case 38:
 				setDirection("UP");
@@ -46,8 +66,10 @@ function App() {
 				setDirection("");
 				break;
 		}
+		console.log(direction);
 	};
-	window.addEventListener("keydown", checkKeyPress, false);
+
+	document.onkeydown = keyPressHandler;
 
 	return (
 		<div className="app">
