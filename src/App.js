@@ -48,28 +48,35 @@ function App() {
 		setSnakeDots(dots);
 	};
 
-	const keyPressHandler = (e) => {
-		switch (e.keyCode) {
-			case 38:
-				setDirection("UP");
-				break;
-			case 40:
-				setDirection("DOWN");
-				break;
-			case 37:
-				setDirection("LEFT");
-				break;
-			case 39:
-				setDirection("RIGHT");
-				break;
-			default:
-				setDirection("");
-				break;
-		}
-		console.log(direction);
-	};
+	moveSnake();
 
-	document.onkeydown = keyPressHandler;
+	useEffect(() => {
+		const keyPressHandler = (e) => {
+			switch (e.keyCode) {
+				case 38:
+					setDirection("UP");
+					break;
+				case 40:
+					setDirection("DOWN");
+					break;
+				case 37:
+					setDirection("LEFT");
+					break;
+				case 39:
+					setDirection("RIGHT");
+					break;
+				default:
+					setDirection("");
+					break;
+			}
+		};
+		document.addEventListener("keydown", keyPressHandler);
+		return () => {
+			document.removeEventListener("keydown", keyPressHandler);
+		};
+	}, []);
+
+	console.log(direction);
 
 	return (
 		<div className="app">
