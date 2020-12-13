@@ -36,6 +36,7 @@ function App() {
 	const [foodDots, setFoodDots] = useState(getRandomFoodDot());
 	const [direction, setDirection] = useState({ val: "RIGHT" });
 	const [lastDirection, setLastDirection] = useState();
+	const [speed, setSpeed] = useState(200);
 
 	const moveSnake = () => {
 		let dots = [...snakeDots];
@@ -75,8 +76,9 @@ function App() {
 	useEffect(() => {
 		const interval = setInterval(() => {
 			moveSnake();
-			console.log(direction);
-		}, 200);
+			checkIfOutOfBorders();
+			checkIfEat();
+		}, speed);
 		return () => clearInterval(interval);
 	}, [snakeDots]);
 
@@ -90,8 +92,49 @@ function App() {
 		};
 	}, []);
 
+	const checkIfEat = () => {
+		let head = snakeDots[snakeDots.length - 1];
+		let food = foodDots;
+		if (head[0] == food[0] && head[1] == food[1]) {
+			setFoodDots(getRandomFoodDot);
+			extendSnake();
+			// increseSpeed();
+		}
+	};
+
+	const extendSnake = () => {
+		let newSnake = [...snakeDots];
+		newSnake.unshift([]);
+		setSnakeDots(newSnake);
+	};
+
+	// // we need increse speed?
+	// const increseSpeed = () => {
+	// 	if (speed > 10) {
+	// 		setSpeed(speed - 10);
+	// 	}
+	// };
+
+	const checkIfOutOfBorders = () => {
+		let head = snakeDots[snakeDots.length - 1];
+		if (head[0] == 100 || head[1] == 100 || head[0] < 0 || head[1] < 0) {
+			onGameOver();
+		}
+	};
+
+	const onGameOver = () => {
+		setSpeed(50);
+		setDirection({ val: "RIGHT" });
+		setLastDirection({ direction });
+		setSnakeDots([
+			[0, 0],
+			[2, 0],
+		]);
+	};
+
 	return (
 		<div className="app">
+			<p>{snakeDots.length}</p>
 			<div className="snake">
 				<Snake snakeDots={snakeDots} />
 				<Food foodDots={foodDots} />
