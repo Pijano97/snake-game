@@ -3,6 +3,21 @@ import "./App.css";
 import Snake from "./Snake";
 import Food from "./Food";
 
+const getDirection = (e) => {
+	switch (e.keyCode) {
+		case 38:
+			return "UP";
+		case 40:
+			return "DOWN";
+		case 37:
+			return "LEFT";
+		case 39:
+			return "RIGHT";
+		default:
+			return;
+	}
+};
+
 function App() {
 	const getRandomFoodDot = () => {
 		let min = 1;
@@ -19,64 +34,61 @@ function App() {
 		[2, 0],
 	]);
 	const [foodDots, setFoodDots] = useState(getRandomFoodDot());
-	const [direction, setDirection] = useState("");
+	const [direction, setDirection] = useState({ val: "RIGHT" });
+	const [lastDirection, setLastDirection] = useState();
 
 	const moveSnake = () => {
 		let dots = [...snakeDots];
 		let head = dots[dots.length - 1];
-
-		switch (direction) {
+		switch (direction.val) {
 			case "UP":
+				setLastDirection(direction);
 				head = [head[0], head[1] - 2];
+				dots.push(head);
+				dots.shift();
 				break;
 			case "DOWN":
+				setLastDirection(direction);
 				head = [head[0], head[1] + 2];
+				dots.push(head);
+				dots.shift();
 				break;
 			case "LEFT":
+				setLastDirection(direction);
 				head = [head[0] - 2, head[1]];
+				dots.push(head);
+				dots.shift();
 				break;
 			case "RIGHT":
+				setLastDirection(direction);
 				head = [head[0] + 2, head[1]];
+				dots.push(head);
+				dots.shift();
 				break;
 			default:
+				setDirection(lastDirection);
 				break;
 		}
-		// adding new head
-		dots.push(head);
-		// removing last dot
-		dots.shift();
 		setSnakeDots(dots);
 	};
 
-	moveSnake();
+	useEffect(() => {
+		const interval = setInterval(() => {
+			moveSnake();
+			console.log(direction);
+		}, 200);
+		return () => clearInterval(interval);
+	}, [snakeDots]);
 
 	useEffect(() => {
 		const keyPressHandler = (e) => {
-			switch (e.keyCode) {
-				case 38:
-					setDirection("UP");
-					break;
-				case 40:
-					setDirection("DOWN");
-					break;
-				case 37:
-					setDirection("LEFT");
-					break;
-				case 39:
-					setDirection("RIGHT");
-					break;
-				default:
-					setDirection("");
-					break;
-			}
+			setDirection({ val: getDirection(e) });
 		};
 		document.addEventListener("keydown", keyPressHandler);
 		return () => {
 			document.removeEventListener("keydown", keyPressHandler);
 		};
 	}, []);
-
-	console.log(direction);
 
 	return (
 		<div className="app">
