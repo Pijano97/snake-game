@@ -1,6 +1,28 @@
+.app {
+	display: flex;
+	padding-left: 280px;
+	padding-top: 50px;
+}
+
+.app__buttons {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100px;
+}
+
+.app__button {
+	margin: 10px !important;
+}
+
 .snake {
+}
+
+.snake__game {
+	display: grid;
+	flex: 1;
 	position: relative;
-	margin: 50px auto;
 	width: 600px;
 	height: 600px;
 	border: 2px solid #000;

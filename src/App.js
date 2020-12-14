@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Snake from "./Snake";
 import Food from "./Food";
+import Button from "@material-ui/core/Button";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import PauseIcon from "@material-ui/icons/Pause";
 
 const getDirection = (e) => {
 	switch (e.keyCode) {
@@ -37,6 +40,7 @@ function App() {
 	const [direction, setDirection] = useState({ val: "RIGHT" });
 	const [lastDirection, setLastDirection] = useState();
 	const [speed, setSpeed] = useState(200);
+	const [gameOver, setGameOver] = useState(false);
 
 	const moveSnake = () => {
 		let dots = [...snakeDots];
@@ -74,13 +78,16 @@ function App() {
 	};
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			moveSnake();
-			checkIfOutOfBorders();
-			checkIfEat();
-		}, speed);
-		return () => clearInterval(interval);
-	}, [snakeDots]);
+		if (gameOver) {
+			const interval = setInterval(() => {
+				moveSnake();
+				checkIfCollapsed();
+				checkIfOutOfBorders();
+				checkIfEat();
+			}, speed);
+			return () => clearInterval(interval);
+		}
+	}, [snakeDots, gameOver]);
 
 	useEffect(() => {
 		const keyPressHandler = (e) => {
@@ -108,24 +115,35 @@ function App() {
 		setSnakeDots(newSnake);
 	};
 
-	// // we need increse speed?
-	// const increseSpeed = () => {
-	// 	if (speed > 10) {
-	// 		setSpeed(speed - 10);
-	// 	}
-	// };
+	// we need increse speed?
+	const increseSpeed = () => {
+		setSpeed(speed - 5);
+	};
 
 	const checkIfOutOfBorders = () => {
 		let head = snakeDots[snakeDots.length - 1];
+		console.log(head);
 		if (head[0] == 100 || head[1] == 100 || head[0] < 0 || head[1] < 0) {
 			onGameOver();
 		}
 	};
 
+	const checkIfCollapsed = () => {
+		let snake = [...snakeDots];
+		let head = snake[snake.length - 1];
+		snake.pop();
+		snake.forEach((dot) => {
+			if (head[0] == dot[0] && head[1] == dot[1]) {
+				onGameOver();
+			}
+		});
+	};
+
 	const onGameOver = () => {
-		setSpeed(50);
+		setSpeed(200);
 		setDirection({ val: "RIGHT" });
 		setLastDirection({ direction });
+		setGameOver(false);
 		setSnakeDots([
 			[0, 0],
 			[2, 0],
@@ -134,10 +152,25 @@ function App() {
 
 	return (
 		<div className="app">
-			<p>{snakeDots.length}</p>
 			<div className="snake">
-				<Snake snakeDots={snakeDots} />
-				<Food foodDots={foodDots} />
+				<div className="snake__game">
+					<Snake snakeDots={snakeDots} />
+					<Food foodDots={foodDots} />
+				</div>
+			</div>
+			<div className="app__buttons">
+				<Button
+					className="app__button"
+					variant="contained"
+					color="primary"
+					endIcon={<PlayArrowIcon>Start</PlayArrowIcon>}
+					onClick={() => {
+						setGameOver(true);
+						console.log(gameOver);
+					}}
+				>
+					PLAY
+				</Button>
 			</div>
 		</div>
 	);
