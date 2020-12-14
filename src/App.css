@@ -1,27 +1,47 @@
 .app {
 	display: flex;
-	padding-left: 280px;
-	padding-top: 50px;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
 }
 
-.app__buttons {
+/* .app__buttons {
 	flex: 1;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	width: 100px;
+} */
+.app__buttons {
+	position: absolute;
+	top: 50;
+	left: 50;
+}
+
+/* change color of game over? */
+.app__gameOver {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+	font-size: 40px;
+	background-color: red;
+	color: #000;
 }
 
 .app__button {
-	margin: 10px !important;
+	width: 300px;
+	height: 100px;
+	font-size: 39px;
 }
 
-.snake {
+.MuiButton-label {
+	font-size: 39px !important;
 }
 
 .snake__game {
-	display: grid;
-	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	position: relative;
 	width: 600px;
 	height: 600px;

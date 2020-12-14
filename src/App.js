@@ -40,7 +40,8 @@ function App() {
 	const [direction, setDirection] = useState({ val: "RIGHT" });
 	const [lastDirection, setLastDirection] = useState();
 	const [speed, setSpeed] = useState(200);
-	const [gameOver, setGameOver] = useState(false);
+	const [gameOver, setGameOver] = useState(true);
+	const [startGame, setStartGame] = useState(false);
 
 	const moveSnake = () => {
 		let dots = [...snakeDots];
@@ -159,18 +160,41 @@ function App() {
 				</div>
 			</div>
 			<div className="app__buttons">
-				<Button
-					className="app__button"
-					variant="contained"
-					color="primary"
-					endIcon={<PlayArrowIcon>Start</PlayArrowIcon>}
-					onClick={() => {
-						setGameOver(true);
-						console.log(gameOver);
-					}}
-				>
-					PLAY
-				</Button>
+				{startGame ? (
+					""
+				) : (
+					<>
+						<Button
+							className="app__button"
+							variant="contained"
+							color="primary"
+							endIcon={<PlayArrowIcon>Start</PlayArrowIcon>}
+							onClick={() => {
+								setStartGame(true);
+							}}
+						>
+							PLAY
+						</Button>
+					</>
+				)}
+				{gameOver ? (
+					""
+				) : (
+					<>
+						<Button
+							className="app__button"
+							variant="contained"
+							color="primary"
+							endIcon={<PlayArrowIcon>Start</PlayArrowIcon>}
+							onClick={() => {
+								setGameOver(true);
+							}}
+						>
+							PLAY AGAIN
+						</Button>
+						<p className="app__gameOver">GAME OVER</p>
+					</>
+				)}
 			</div>
 		</div>
 	);
