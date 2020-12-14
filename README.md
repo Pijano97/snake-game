@@ -1,3 +1,8 @@
+## Game is not final.
+
+This is trial version of game.\
+Need to fix some bugs.
+
 ## Available Scripts
 
 In the project directory, you can run:
