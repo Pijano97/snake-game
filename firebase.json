@@ -1,7 +1,6 @@
 {
   "hosting": {
-    "site": "snake-game-pijano97",
-    "public": "public",
+    "public": "build",
     "ignore": [
       "firebase.json",
       "**/.*",

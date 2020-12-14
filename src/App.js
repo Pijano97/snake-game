@@ -123,7 +123,6 @@ function App() {
 
 	const checkIfOutOfBorders = () => {
 		let head = snakeDots[snakeDots.length - 1];
-		console.log(head);
 		if (head[0] == 100 || head[1] == 100 || head[0] < 0 || head[1] < 0) {
 			onGameOver();
 		}
