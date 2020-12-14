@@ -1,7 +1,7 @@
 ## Game is not final.
 
-This is trial version of game.\
-Need to fix some bugs.
+This is test version of game.\
+Some bugs should be fixed
 
 ## Available Scripts
 
