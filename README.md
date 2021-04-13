@@ -1,17 +1,28 @@
-## Game is not final.
+# Portfolio
 
-This is test version of game.\
-Some bugs should be fixed
+## Table of contents:
 
-## Available Scripts
+- [Requirements](#requirements)
+- [Setup](#setup)
+- [Technologies](#technologies)
+- [Description](#description)
 
-In the project directory, you can run:
+### Requirments
 
-### `npm start`
+- NodeJS (v14.15.1)
+- npm (v6.14.4)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser...
+### Setup
 
-## Deployed with firebase, game is available on next link
+- `git clone` [https://github.com/Pijano97/snake-game.git]
+- in repo root directory - `npm install`
+- in repo root directory -` npm start`
 
-https://snake-game-a2b90.web.app/
+### Technologies
+
+- ReactJS
+- Firebase
+
+### Description of project
+
+Snake game
