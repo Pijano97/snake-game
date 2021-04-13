@@ -1,5 +1,3 @@
-# Portfolio
-
 ## Table of contents:
 
 - [Requirements](#requirements)
