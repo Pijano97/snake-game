@@ -1,3 +1,5 @@
+#Snake Game
+
 ## Table of contents:
 
 - [Requirements](#requirements)
